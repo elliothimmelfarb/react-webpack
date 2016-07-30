@@ -1,32 +1,42 @@
 import React, { Component } from 'react';
-
-import uuid from 'uuid';
-
 import PropertiesForm from './PropertiesForm';
 import PropertiesList from './PropertiesList';
+
+import PropertyStore from '../stores/PropertyStore';
+import PropertyActions from '../actions/PropertyActions';
+
+
+function _getComponentState() {
+  return {
+    properties: PropertyStore.getAllProperties(),
+  };
+}
+
 
 export default class Properties extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      properties: [],
+      properties: _getComponentState().properties,
       adding: false,
     };
 
-    this.addProperty = this.addProperty.bind(this);
-    this.deleteProperty = this.deleteProperty.bind(this);
+    this._onChange = this._onChange.bind(this);
   }
 
-  addProperty(property) {
-    const newProperty = Object.assign({}, property);
-    newProperty.id = uuid();
-    const properties = this.state.tenants.concat(newProperty);
-    this.setState({ properties });
+  componentDidMount() {
+    PropertyActions.getAllProperties();
+    PropertyStore.startListening(this._onChange);
   }
 
-  deleteProperty(id) {
-    this.setState({ tenants: this.state.tenants.filter(tenant => tenant.id !== id) });
+  componentWillUnmount() {
+    PropertyStore.stopListening(this._onChange);
+  }
+
+  _onChange() {
+    console.log('7. In Properties component, updating component state');
+    this.setState(_getComponentState());
   }
 
   render() {
@@ -39,7 +49,7 @@ export default class Properties extends Component {
           {this.state.adding ? 'View Properties' : 'Add Properties'}
         </button>
         {this.state.adding ?
-          <PropertiesForm addProperty={this.addProperty} /> :
+          <PropertiesForm /> :
           <PropertiesList properties={this.state.properties} deleteProperty={this.deleteProperty} />
         }
       </div>

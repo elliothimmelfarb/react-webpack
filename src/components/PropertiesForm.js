@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropertyActions from '../actions/PropertyActions'
 
 export default class PropertiesForm extends Component {
   constructor(props) {
@@ -14,8 +14,12 @@ export default class PropertiesForm extends Component {
 
   onAddProperty(e) {
     e.preventDefault();
-    this.props.addProperty(this.state);
-    this.setState({ name: '', email: '', submitted: true });
+
+    const newProperty = Object.assign({}, this.state);
+
+    PropertyActions.addNewProperty(newProperty);
+
+    this.setState({ name: '', email: '' });
   }
 
   render() {
@@ -50,6 +54,3 @@ export default class PropertiesForm extends Component {
     );
   }
 }
-PropertiesForm.propTypes = {
-  addProperty: React.PropTypes.func,
-};

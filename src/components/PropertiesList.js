@@ -16,14 +16,13 @@ export default class PropertiesList extends Component {
 
   render() {
     const properties = this.props.properties.map(property => {
-      const singleProperty = Object.assign({}, property);
-      singleProperty.deleteProperty = this.props.deleteProperty;
-      return <SingleProperty key={singleProperty.id} {...singleProperty} />;
+      const singleProperties = Object.assign({}, property);
+      return <SingleProperty key={singleProperties._id} {...singleProperties} />;
     });
 
     return (
       <div>
-        <h1>Tenant List:</h1>
+        <h1>Properties List:</h1>
         <table className="table">
           <tbody>
             {properties}
@@ -35,5 +34,4 @@ export default class PropertiesList extends Component {
 }
 PropertiesList.propTypes = {
   properties: React.PropTypes.array,
-  deleteProperty: React.PropTypes.func,
 };

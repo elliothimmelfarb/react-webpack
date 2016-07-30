@@ -8,7 +8,7 @@ module.exports = {
     'webpack-hot-middleware/client?reload=true',
     'bootstrap-loader',
     './src/style.css',
-    './src/main.js',
+    './src/index.js',
   ],
   target: 'web',
   output: {

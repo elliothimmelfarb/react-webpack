@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import css from '../style.css';
+
+import PropertyActions from '../actions/PropertyActions';
 
 export default class SingleProperty extends Component {
   constructor(props) {
@@ -12,8 +13,20 @@ export default class SingleProperty extends Component {
     };
   }
 
+  onEditToggle(id) {
+    if (this.state.editing) {
+      const updatedProperty = {
+        _id: id,
+        name: this.state.name,
+        email: this.state.email,
+      };
+      PropertyActions.updateProperty(updatedProperty);
+    }
+    this.setState({ editing: !this.state.editing });
+  }
+
   render() {
-    const { id, deleteProperty } = this.props;
+    const { _id } = this.props;
 
     return (
       <tr>
@@ -36,7 +49,7 @@ export default class SingleProperty extends Component {
         <td>
           <button
             className="btn btn-sm btn-warning"
-            onClick={() => this.setState({ editing: !this.state.editing })}
+            onClick={() => this.onEditToggle(_id)}
           >
           {!this.state.editing ? 'Edit' : 'Confirm'}
           </button>
@@ -44,13 +57,10 @@ export default class SingleProperty extends Component {
         <td>
           <button
             className="btn btn-sm btn-danger"
-            onClick={() => deleteProperty(id)}
+            onClick={() => PropertyActions.deleteProperty(_id)}
           >
             Delete
           </button>
-        </td>
-        <td>
-          <p className={css.test}>This should be red!</p>
         </td>
       </tr>
     );
@@ -59,6 +69,6 @@ export default class SingleProperty extends Component {
 SingleProperty.propTypes = {
   name: React.PropTypes.string,
   email: React.PropTypes.string,
-  id: React.PropTypes.string,
+  _id: React.PropTypes.string,
   deleteTenant: React.PropTypes.func,
 };

@@ -16,7 +16,8 @@ router.post('/', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-  Tenant.findByIdAndUpdate(req.body.id, req.body, 'new', (err, dbTenant) => {
+  console.log('here');
+  Tenant.findByIdAndUpdate(req.body._id, req.body, 'new', (err, dbTenant) => {
     if (err) return res.status(400).send(err);
     return Tenant.find({}, (err, dbTenants) => {
       return res.status(err ? 400 : 200).send(err || dbTenants);

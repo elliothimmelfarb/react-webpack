@@ -1,9 +1,8 @@
 import $, { post, get } from 'jquery';
-import ServerActions from './actions/ServerActions';
+import ServerActions from '../actions/ServerActions';
 
 const API = {
   addNewTenant(tenant) {
-    console.log('3. in API, posting to server');
     post('/api/tenants', tenant)
       .done(response => ServerActions.receiveOneTenant(response));
   },
