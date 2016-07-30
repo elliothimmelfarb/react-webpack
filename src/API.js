@@ -11,7 +11,7 @@ const API = {
   deleteTenant(_id) {
     $.ajax({
       url: `/api/tenants/${_id}`,
-      type: 'DETELE',
+      type: 'DELETE',
       success: (response) => {
         ServerActions.receiveAllTenants(response);
       },

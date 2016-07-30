@@ -22,9 +22,10 @@ router.post('/', (req, res) => {
 // });
 //
 router.delete('/:id', (req, res) => {
+  console.log('here');
   Tenant.findByIdAndRemove(req.params.id, (err) => {
     if (err) return res.status(400).send(err);
-    Tenant.find({}, (err, dbTenants) => {
+    return Tenant.find({}, (err, dbTenants) => {
       return res.status(err ? 400 : 200).send(err || dbTenants);
     });
   });
