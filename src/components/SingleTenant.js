@@ -13,8 +13,16 @@ export default class SingleTenant extends Component {
     };
   }
 
-  onDeleteTenant(id) {
-    TenantActions.deleteTenant(id);
+  onEditToggle(id) {
+    if (this.state.editing) {
+      const updatedTenant = {
+        _id: id,
+        name: this.state.name,
+        email: this.state.email,
+      };
+      TenantActions.updateTenant(updatedTenant);
+    }
+    this.setState({ editing: !this.state.editing });
   }
 
   render() {
@@ -41,7 +49,7 @@ export default class SingleTenant extends Component {
         <td>
           <button
             className="btn btn-sm btn-warning"
-            onClick={() => this.setState({ editing: !this.state.editing })}
+            onClick={() => this.onEditToggle(_id)}
           >
           {!this.state.editing ? 'Edit' : 'Confirm'}
           </button>
@@ -49,7 +57,7 @@ export default class SingleTenant extends Component {
         <td>
           <button
             className="btn btn-sm btn-danger"
-            onClick={() => this.onDeleteTenant(_id)}
+            onClick={() => TenantActions.deleteTenant(_id)}
           >
             Delete
           </button>

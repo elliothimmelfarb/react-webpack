@@ -10,6 +10,10 @@ const TenantActions = {
     API.deleteTenant(_id);
   },
 
+  updateTenant(tenant) {
+    API.updateTenant(tenant);
+  },
+
   getAllTenants() {
     API.getAllTenants();
   },
