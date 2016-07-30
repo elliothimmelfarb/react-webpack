@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TenantActions from '../actions/TenantActions'
 
-
 export default class TenantsForm extends Component {
   constructor(props) {
     super(props);
@@ -15,12 +14,15 @@ export default class TenantsForm extends Component {
 
   onAddTenant(e) {
     e.preventDefault();
-    // this.props.addTenant(this.state);
 
-    TenantActions.addNewTenant(this.state);
+    console.log('1. On submit fired in TenantsForm from onAddTenant' + this.state);
+    console.log('** firing TenantActions.addNewTenant(this.state);');
 
+    const newTenant = Object.assign({}, this.state);
 
-    this.setState({ name: '', email: '', submitted: true });
+    TenantActions.addNewTenant(newTenant);
+
+    this.setState({ name: '', email: '' });
   }
 
   render() {
@@ -55,6 +57,3 @@ export default class TenantsForm extends Component {
     );
   }
 }
-TenantsForm.propTypes = {
-  addTenant: React.PropTypes.func,
-};

@@ -1,33 +1,47 @@
 import React, { Component } from 'react';
-
-import uuid from 'uuid';
-
 import TenantsForm from './TenantsForm';
 import TenantsList from './TenantsList';
+
+import TenantStore from '../stores/TenantStore';
+import TenantActions from '../actions/TenantActions';
+
+
+function _getComponentState() {
+  return {
+    tenants: TenantStore.getAllTenants(),
+  };
+}
+
 
 export default class Tenants extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tenants: [],
+      tenants: _getComponentState().tenants,
       adding: false,
     };
 
-    this.addTenant = this.addTenant.bind(this);
-    this.deleteTenant = this.deleteTenant.bind(this);
+    this._onChange = this._onChange.bind(this);
   }
 
-  addTenant(tenant) {
-    const newTenant = Object.assign({}, tenant);
-    newTenant.id = uuid();
-    const tenants = this.state.tenants.concat(newTenant);
-    this.setState({ tenants });
+  componentDidMount() {
+    TenantActions.getAllTenants();
+    TenantStore.startListening(this._onChange);
   }
 
-  deleteTenant(id) {
-    this.setState({ tenants: this.state.tenants.filter(tenant => tenant.id !== id) });
+  componentWillUnmount() {
+    TenantStore.stopListening(this._onChange);
   }
+
+  _onChange() {
+    console.log('7. In Tenants component, updating component state');
+    this.setState(_getComponentState());
+  }
+
+  // deleteTenant(id) {
+  //   this.setState({ tenants: this.state.tenants.filter(tenant => tenant.id !== id) });
+  // }
 
   render() {
     return (
@@ -39,7 +53,7 @@ export default class Tenants extends Component {
           {this.state.adding ? 'View Tenants' : 'Add Tenants'}
         </button>
         {this.state.adding ?
-          <TenantsForm addTenant={this.addTenant} /> :
+          <TenantsForm /> :
           <TenantsList tenants={this.state.tenants} deleteTenant={this.deleteTenant} />
         }
       </div>

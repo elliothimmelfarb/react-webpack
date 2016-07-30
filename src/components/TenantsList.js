@@ -17,8 +17,7 @@ export default class TenantsList extends Component {
   render() {
     const tenants = this.props.tenants.map(tenant => {
       const singleTenant = Object.assign({}, tenant);
-      singleTenant.deleteTenant = this.props.deleteTenant;
-      return <SingleTenant key={singleTenant.id} {...singleTenant} />;
+      return <SingleTenant key={singleTenant._id} {...singleTenant} />;
     });
 
     return (
@@ -35,5 +34,4 @@ export default class TenantsList extends Component {
 }
 TenantsList.propTypes = {
   tenants: React.PropTypes.array,
-  deleteTenant: React.PropTypes.func,
 };

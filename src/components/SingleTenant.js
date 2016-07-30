@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import css from '../style.css';
+
+import TenantActions from '../actions/TenantActions';
 
 export default class SingleTenant extends Component {
   constructor(props) {
@@ -12,8 +13,12 @@ export default class SingleTenant extends Component {
     };
   }
 
+  onDeleteTenant(id) {
+    TenantActions.deleteTenant(id);
+  }
+
   render() {
-    const { id, deleteTenant } = this.props;
+    const { _id } = this.props;
 
     return (
       <tr>
@@ -44,13 +49,10 @@ export default class SingleTenant extends Component {
         <td>
           <button
             className="btn btn-sm btn-danger"
-            onClick={() => deleteTenant(id)}
+            onClick={() => this.onDeleteTenant(_id)}
           >
             Delete
           </button>
-        </td>
-        <td>
-          <p className={css.test}>This should be red!</p>
         </td>
       </tr>
     );
@@ -59,6 +61,6 @@ export default class SingleTenant extends Component {
 SingleTenant.propTypes = {
   name: React.PropTypes.string,
   email: React.PropTypes.string,
-  id: React.PropTypes.string,
+  _id: React.PropTypes.string,
   deleteTenant: React.PropTypes.func,
 };

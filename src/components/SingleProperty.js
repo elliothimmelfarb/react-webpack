@@ -13,7 +13,7 @@ export default class SingleProperty extends Component {
   }
 
   render() {
-    const { id, deleteTenant } = this.props;
+    const { id, deleteProperty } = this.props;
 
     return (
       <tr>
@@ -44,7 +44,7 @@ export default class SingleProperty extends Component {
         <td>
           <button
             className="btn btn-sm btn-danger"
-            onClick={() => deleteTenant(id)}
+            onClick={() => deleteProperty(id)}
           >
             Delete
           </button>

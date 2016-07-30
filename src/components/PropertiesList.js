@@ -15,10 +15,10 @@ export default class PropertiesList extends Component {
   }
 
   render() {
-    const properties = this.props.properties.map(tenant => {
-      const singleTenant = Object.assign({}, tenant);
-      singleTenant.deleteTenant = this.props.deleteTenant;
-      return <SingleTenant key={singleTenant.id} {...singleTenant} />;
+    const properties = this.props.properties.map(property => {
+      const singleProperty = Object.assign({}, property);
+      singleProperty.deleteProperty = this.props.deleteProperty;
+      return <SingleProperty key={singleProperty.id} {...singleProperty} />;
     });
 
     return (
@@ -35,5 +35,5 @@ export default class PropertiesList extends Component {
 }
 PropertiesList.propTypes = {
   properties: React.PropTypes.array,
-  deleteTenant: React.PropTypes.func,
+  deleteProperty: React.PropTypes.func,
 };
